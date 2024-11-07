@@ -11,6 +11,7 @@ import FirebaseAuth
 
 struct RegisterView: View {
     @State private var userRegistration = UserRegistration(email: "", password: "", confirmPassword: "")
+    @State private var isSignedUp: Bool = false
     @State private var alertMessage: String = ""
     @State private var showAlert: Bool = false
     
@@ -19,12 +20,15 @@ struct RegisterView: View {
             VStack(spacing: 20) {
                 Text("TeachEase")
                     .font(.largeTitle)
+                    .foregroundColor(.black)
                     .bold()
-                    .padding(.top, 30)
-
+                    .padding(.top, 50)
+                    .padding(.bottom, 60)
+                
                 Text("Create new account")
                     .font(.title3)
-                    .padding(.bottom, 50)
+                    .foregroundColor(.black)
+                    .padding(.bottom, 30)
                 
                 TextField("Enter your email", text: $userRegistration.email)
                     .keyboardType(.emailAddress)
@@ -43,7 +47,9 @@ struct RegisterView: View {
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(8)
                 
-                Button(action: handleSignUp) {
+                Button(action: {
+                    handleSignUp()
+                }) {
                     Text("Sign up")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -63,9 +69,12 @@ struct RegisterView: View {
                     }
                 }
                 .padding()
+                
+                NavigationLink(destination: ProfileCreationView(), isActive: $isSignedUp) {
+                    EmptyView()
+                }
             }
             .padding()
-            .navigationBarBackButtonHidden(true) // Hide back button
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Registration Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
@@ -91,13 +100,14 @@ struct RegisterView: View {
             return
         }
         
-        Auth.auth().createUser(withEmail: userRegistration.email, password: userRegistration.password) { _, error in
+        Auth.auth().createUser(withEmail: userRegistration.email, password: userRegistration.password) { authResult, error in
             if let error = error {
                 alertMessage = "Error during sign up: \(error.localizedDescription)"
                 showAlert = true
             } else {
                 alertMessage = "Account created successfully!"
                 showAlert = true
+                isSignedUp = true
             }
         }
     }
