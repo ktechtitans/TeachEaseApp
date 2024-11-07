@@ -38,7 +38,8 @@ struct HomeContentView: View {
                     .fontWeight(.bold)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
-                    .padding(.vertical, 35)
+                    .padding(.vertical, 70)
+                    .padding(.bottom, -40)
 
                 Spacer()
 
@@ -47,6 +48,8 @@ struct HomeContentView: View {
                     .fontWeight(.medium)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
+                    .padding(.bottom, -40)
+                
             }
             .padding()
             .background(Color.white) // Background color for title section

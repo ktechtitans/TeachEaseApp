@@ -35,11 +35,7 @@ struct HomePageView: View {
                         .font(.largeTitle)
                         .padding()
 
-                    Text("Username: Kaur.Kanchan")
-                    Text("Bio: This is a Profile.")
-                    Text("Subjects Taught: Mathematics, Science")
-                    Text("Language Preference: English")
-                    Text("Education: Master's in Education")
+                    
                 }
                 .padding()
             }
